@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes showUp {
+    0% {
+        transform: translateY(6rem);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes moveRightAndBack {
+    0% {
+        transform: translateX(-12px);
+    }
+
+    100% {
+        transform: translateX(12px);
+    }
+}
+
+.showUpAnimation {
+    animation-name: showUp;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+}
+
+.moveRightAndBackAnimation {
+    animation-name: moveRightAndBack;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+}

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
 import { API } from "../utils/endpoints";
-import { useLogin } from "./LoginContext";
+import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
@@ -63,7 +63,9 @@ function RegisterProvider({ children }) {
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  const { updateUser } = useLogin();
+  const { updateUser } = useAuth();
+
+  const navigate = useNavigate();
 
   async function register() {
     if (email.length === 0) {
@@ -134,6 +136,7 @@ function RegisterProvider({ children }) {
         if (data.user) {
           localStorage.setItem("access_token", data.access_token);
           updateUser(data.user);
+          navigate("/home");
         }
       } catch (error) {
         dispatch({

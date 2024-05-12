@@ -1,11 +1,14 @@
 import LoginForm from "../components/form/LoginForm";
+import { LoginProvider } from "../contexts/LoginContext";
 import LoginLayout from "../layouts/LoginLayout";
 
 function LoginPage() {
   return (
-    <LoginLayout>
-      <LoginForm />
-    </LoginLayout>
+    <LoginProvider>
+      <LoginLayout>
+        <LoginForm />
+      </LoginLayout>
+    </LoginProvider>
   );
 }
 

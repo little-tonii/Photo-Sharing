@@ -2,12 +2,12 @@ import axios from "axios";
 import { createContext, useContext, useReducer, useState } from "react";
 import { API } from "../utils/endpoints";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const initialState = {
   email: "",
   password: "",
   error: "",
-  user: null,
 };
 
 const reducer = (state, action) => {
@@ -18,9 +18,6 @@ const reducer = (state, action) => {
       return { ...state, password: action.payload };
     case "updateError":
       return { ...state, error: action.payload };
-    case "updateUser":
-    case "login":
-      return { ...state, user: action.payload };
     default:
       throw new Error("Unknown action type.");
   }
@@ -29,16 +26,14 @@ const reducer = (state, action) => {
 const LoginContext = createContext();
 
 function LoginProvider({ children }) {
-  const [{ email, password, error, user }, dispatch] = useReducer(
+  const [{ email, password, error }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
-  const navigate = useNavigate();
+  const { updateUser } = useAuth();
 
-  function updateUser(value) {
-    dispatch({ type: "updateUser", payload: value });
-  }
+  const navigate = useNavigate();
 
   function updateEmail(value) {
     dispatch({ type: "updateEmail", payload: value });
@@ -63,12 +58,8 @@ function LoginProvider({ children }) {
       const data = await res.data;
 
       if (data.user) {
-        dispatch({ type: "login", payload: data.user });
-        dispatch({
-          type: "updateError",
-          payload: "",
-        });
-        localStorage.setItem("access_token", data.access_token);
+        updateUser(data.user);
+        navigate("/home");
       } else {
         console.log(data);
       }
@@ -87,10 +78,9 @@ function LoginProvider({ children }) {
         email,
         password,
         error,
-        updateUser,
+        login,
         updateEmail,
         updatePassword,
-        login,
         register,
       }}
     >

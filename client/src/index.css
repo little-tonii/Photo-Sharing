@@ -36,3 +36,27 @@
     animation-iteration-count: infinite;
     animation-timing-function: ease-out;
 }
+
+::-webkit-scrollbar {
+    width: 8px;
+    /* Chiều rộng của thanh cuộn */
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+    /* Màu sắc của vùng cuộn (track) */
+    border-radius: 10px;
+    /* Để có hình dạng tròn */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444;
+    /* Màu sắc của nút cuộn (thumb) */
+    border-radius: 10px;
+    /* Để có hình dạng tròn */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #888;
+    /* Màu sắc khi hover lên nút cuộn */
+}

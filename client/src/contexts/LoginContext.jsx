@@ -58,8 +58,9 @@ function LoginProvider({ children }) {
       const data = await res.data;
 
       if (data.user) {
+        localStorage.setItem("access_token", data.access_token);
         updateUser(data.user);
-        navigate("/home");
+        navigate("/app");
       } else {
         console.log(data);
       }

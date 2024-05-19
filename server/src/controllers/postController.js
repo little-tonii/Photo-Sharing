@@ -37,7 +37,7 @@ exports.getAllPost = catchError(async (req, res, next) => {
     }
   }
 
-  const posts = await Post.find(query);
+  const posts = await Post.find(query).populate("user");
 
   res.status(200).json(posts);
 });

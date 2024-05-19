@@ -1,4 +1,3 @@
-// eslint-disable-next-line react/prop-types
 function LoginLayout({ children }) {
   return (
     <div className="bg-white h-screen flex flex-col justify-center items-center">

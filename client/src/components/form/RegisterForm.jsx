@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useRegister } from "../../contexts/RegisterContext";
-import ButtonForm from "../button/ButtonForm";
-import InputFieldForm from "../button/InputFieldForm";
-import TextErrorValidation from "../button/TextErrorValidation";
+import ButtonForm from "../commons/ButtonForm";
+import InputFieldForm from "../commons/InputFieldForm";
+import TextErrorValidation from "../commons/TextErrorValidation";
 
 function RegisterForm() {
   const {
@@ -25,7 +25,12 @@ function RegisterForm() {
   } = useRegister();
 
   return (
-    <div className="showUpAnimation w-1/3 bg-white border-2 p-8 border-black rounded-lg">
+    <div
+      onKeyDown={(event) => {
+        if (event.key === "Enter") register();
+      }}
+      className="showUpAnimation w-1/3 bg-white border-2 p-8 border-black rounded-lg"
+    >
       <div className="flex flex-col gap-4 mb-8">
         <div>
           <InputFieldForm

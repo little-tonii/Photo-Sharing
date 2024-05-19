@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -28,7 +27,7 @@ const userSchema = new mongoose.Schema({
       message:
         "Username must contain only letters a-z and numbers 0-9 with maximum length of 36 characters.)",
     },
-    default: crypto.randomUUID().split("-").join(""),
+    required: [true, "Username is required."],
   },
   firstName: {
     type: String,
@@ -64,6 +63,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
     default: "avatar.png",
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

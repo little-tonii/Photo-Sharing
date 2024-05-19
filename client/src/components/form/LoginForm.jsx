@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import InputFieldForm from "../button/InputFieldForm";
-import ButtonForm from "../button/ButtonForm";
+import InputFieldForm from "../commons/InputFieldForm";
+import ButtonForm from "../commons/ButtonForm";
 import { useLogin } from "../../contexts/LoginContext";
 
 function LoginForm() {
@@ -15,7 +15,14 @@ function LoginForm() {
   } = useLogin();
 
   return (
-    <div className="showUpAnimation w-1/3 bg-white border-2 p-8 border-black rounded-lg">
+    <div
+      className="showUpAnimation w-1/3 bg-white border-2 p-8 border-black rounded-lg"
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          login();
+        }
+      }}
+    >
       <div className="flex flex-col gap-4 mb-2">
         <InputFieldForm
           name="email"

@@ -27,14 +27,14 @@ module.exports = (err, req, res, next) => {
         message: `Invalid ${err.path}: ${err.value}.`,
       });
     } else {
-      // res.status(500).json({
-      //   message: err.message,
-      //   name: err.name,
-      //   code: err.code,
-      // });
       res.status(500).json({
-        message: "Something went wrong, try again later.",
+        message: err.message,
+        name: err.name,
+        code: err.code,
       });
+      // res.status(500).json({
+      //   message: "Something went wrong, try again later.",
+      // });
     }
   }
 };

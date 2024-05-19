@@ -18,6 +18,7 @@ app.use(
   })
 );
 app.use(morgan("dev"));
+app.use("/public", express.static("public"));
 
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);

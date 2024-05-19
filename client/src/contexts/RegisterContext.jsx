@@ -136,7 +136,7 @@ function RegisterProvider({ children }) {
         if (data.user) {
           localStorage.setItem("access_token", data.access_token);
           updateUser(data.user);
-          navigate("/home");
+          navigate("/app");
         }
       } catch (error) {
         dispatch({

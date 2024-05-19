@@ -1,16 +1,31 @@
-import { createContext, useContext, useState } from "react";
+import { act, createContext, useContext, useReducer, useState } from "react";
 
 const AuthContext = createContext();
 
+const initialState = {
+  user: null,
+  isAuth: Boolean(localStorage.getItem("access_token")),
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "setUser":
+      return { ...state, user: action.payload };
+    default:
+      throw new Error("Unknown action type.");
+  }
+}
+
 function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [{ user, isAuth }, dispatch] = useReducer(reducer, initialState);
 
   function updateUser(user) {
-    setUser(user);
+    dispatch({ type: "setUser", payload: user });
+    localStorage.setItem("user", JSON.stringify(user));
   }
 
   return (
-    <AuthContext.Provider value={{ user, updateUser }}>
+    <AuthContext.Provider value={{ user, isAuth, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

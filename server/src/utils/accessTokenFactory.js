@@ -8,3 +8,9 @@ exports.generate = (payload) => {
     accessToken: jwt.sign(payload, key, { expiresIn: expire }),
   };
 };
+
+exports.verifyAccessToken = (token) => {
+  const key = process.env.ACCESS_TOKEN_KEY;
+
+  return jwt.verify(token, key);
+};

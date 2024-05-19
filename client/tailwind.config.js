@@ -5,6 +5,7 @@ export default {
     extend: {},
     fontFamily: {
       lato: ["Lato", "san serif"],
+      dancingScript: ["Dancing Script", "san serif"],
     },
   },
   plugins: [],

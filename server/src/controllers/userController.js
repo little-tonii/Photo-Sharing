@@ -4,6 +4,17 @@ const User = require("../models/userModel");
 const accessTokenFactory = require("../utils/accessTokenFactory");
 const refreshTokenFactory = require("../utils/refreshTokenFactory");
 const AppError = require("../utils/appError");
+const generateRandomUsername = require("../utils/generateRandomUsername");
+
+exports.getSuggestUsers = catchError(async (req, res, next) => {
+  const users = await User.find({
+    _id: { $nin: [req.user.id, ...req.user.followings] },
+  })
+    .sort({ createdAt: -1 })
+    .limit(5);
+
+  res.status(200).json(users);
+});
 
 exports.register = catchError(async (req, res, next) => {
   const data = {
@@ -11,6 +22,7 @@ exports.register = catchError(async (req, res, next) => {
     password: req.body.password,
     firstName: req.body.first_name,
     lastName: req.body.last_name,
+    username: generateRandomUsername(),
   };
 
   const newUser = await User.create(data);
@@ -91,5 +103,45 @@ exports.logout = catchError(async (req, res, next) => {
 
   res.status(200).json({
     message: "Logout successfully.",
+  });
+});
+
+exports.getUser = catchError(async (req, res, next) => {
+  const user = await User.findById(req.params.userId);
+
+  if (!user) {
+    return next(
+      new AppError(`No user found with id ${req.params.userId}.`, 404)
+    );
+  }
+
+  user.password = undefined;
+  user.refreshToken = undefined;
+
+  res.status(200).json(user);
+});
+
+exports.getAccessToken = catchError(async (req, res, next) => {
+  const refreshToken = req.cookies.refresh_token;
+
+  if (!refreshToken) {
+    return next(new AppError("Refresh token is required.", 400));
+  }
+
+  const user = await User.findOne({ refreshToken });
+
+  if (!user) {
+    return next(
+      new AppError(
+        `No user found with refresh token ${req.cookies.refreshToken}.`,
+        404
+      )
+    );
+  }
+
+  const { accessToken } = accessTokenFactory.generate({ _id: user._id });
+
+  res.status(200).json({
+    access_token: accessToken,
   });
 });

@@ -31,7 +31,7 @@ function LoginProvider({ children }) {
     initialState
   );
 
-  const { updateUser } = useAuth();
+  const { updateUser, setIsAuth } = useAuth();
 
   const navigate = useNavigate();
 
@@ -60,6 +60,7 @@ function LoginProvider({ children }) {
       if (data.user) {
         localStorage.setItem("access_token", data.access_token);
         updateUser(data.user);
+        setIsAuth();
         navigate("/app");
       } else {
         console.log(data);

@@ -9,7 +9,7 @@ function NewFeedsProvider({ children }) {
   const { user, updateUser } = useAuth();
   const [posts, setPosts] = useState([]);
   const [suggestUsers, setSuggestUsers] = useState([]);
-
+  
   useEffect(() => {
     if (!user) {
       updateUser(JSON.parse(localStorage.getItem("user")));
@@ -30,6 +30,22 @@ function NewFeedsProvider({ children }) {
       }
     }
     getSuggestUsers();
+  }, []);
+
+  useEffect(() => {
+    async function getNewFeeds() {
+      const res = await axios.get(API.NEW_FEEDS, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      if (res.status === 200) {
+        const data = res.data;
+        setPosts(data);
+      }
+    }
+    getNewFeeds();
   }, []);
 
   return (

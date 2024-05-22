@@ -3,16 +3,19 @@ import { NavBarProvider } from "../contexts/NavBarContext";
 import HomeLayout from "../layouts/HomeLayout";
 import { CreatePostProvider } from "../contexts/CreatePostContext";
 import { NewFeedsProvider } from "../contexts/NewFeedsContext";
+import { SuggestionUserProvider } from "../contexts/SuggestionUserContext";
 
 function HomePage() {
   return (
     <NavBarProvider>
       <NewFeedsProvider>
-        <CreatePostProvider>
-          <HomeLayout>
-            <Outlet />
-          </HomeLayout>
-        </CreatePostProvider>
+        <SuggestionUserProvider>
+          <CreatePostProvider>
+              <HomeLayout>
+                <Outlet />
+              </HomeLayout>
+          </CreatePostProvider>
+        </SuggestionUserProvider>
       </NewFeedsProvider>
     </NavBarProvider>
   );

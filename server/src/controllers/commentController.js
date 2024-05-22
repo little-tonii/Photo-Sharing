@@ -4,13 +4,13 @@ const AppError = require("../utils/appError");
 const catchError = require("../utils/catchError");
 
 exports.getAllCommentsOnPost = catchError(async (req, res, next) => {
-  const post = await Post.findById(req.body.post);
+  const post = await Post.findById(req.query.post);
 
   if (!post) {
-    return next(new AppError(`No post found with id ${req.body.post}.`, 404));
+    return next(new AppError(`No post found with id ${req.query.post}.`, 404));
   }
 
-  const comments = await Comment.find({ post: req.body.post });
+  const comments = await Comment.find({ post: req.query.post });
 
   res.status(200).json(comments);
 });

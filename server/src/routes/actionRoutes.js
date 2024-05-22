@@ -6,6 +6,10 @@ const router = express.Router();
 
 router.use(protectRoute);
 
+router.post("/follow/:userId", actionController.followUser);
+
+router.delete("/unfollow/:userId", actionController.unfollowUser);
+
 router
   .route("/like/:postId")
   .post(actionController.likePost)

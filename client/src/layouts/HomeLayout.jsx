@@ -3,6 +3,7 @@ import { useCreatePost } from "../contexts/CreatePostContext";
 
 function HomeLayout({ children }) {
   const { isCreated, handleClosePopup } = useCreatePost();
+  
 
   return (
     <div className="h-screen w-screen relative">

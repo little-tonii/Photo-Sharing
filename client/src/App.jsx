@@ -7,6 +7,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NewFeeds from "./components/newfeeds/NewFeeds";
 import CreatePost from "./components/create_post/CreatePost";
+import Profile from "./components/profile/Profile";
+import UserProfile from "./components/user_profile/UserProfile";
+import ViewPost from "./components/view_post/ViewPost";
 
 function App() {
   return (
@@ -31,7 +34,16 @@ function App() {
                     <NewFeeds />
                   </ProtectedRoute>
                 }
-              />
+              >
+                <Route
+                  to="/app/home/post/:postId"
+                  element={
+                    <ProtectedRoute>
+                      <ViewPost />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
               <Route
                 path="/app/search"
                 element={<ProtectedRoute></ProtectedRoute>}
@@ -46,7 +58,19 @@ function App() {
               />
               <Route
                 path="/app/profile"
-                element={<ProtectedRoute></ProtectedRoute>}
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/app/user/:userId"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
+                }
               />
             </Route>
             <Route path="/login" element={<LoginPage />} />

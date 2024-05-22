@@ -8,6 +8,7 @@ function NavBar() {
     handlePostNavigate,
     handleSearchNavigate,
     handleProfileNavigate,
+    handleLogout,
   } = useNavBar();
 
   return (
@@ -46,7 +47,14 @@ function NavBar() {
         </div>
       </div>
       <div className="flex flex-col">
-        <NavButton text="Logout" icon="ti-shift-left" />
+        <NavButton
+          text="Logout"
+          icon="ti-shift-left"
+          action={(event) => {
+            event.preventDefault();
+            handleLogout();
+          }}
+        />
       </div>
     </nav>
   );

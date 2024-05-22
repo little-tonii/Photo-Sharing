@@ -16,6 +16,10 @@ const commentSchema = new mongoose.Schema({
     required: [true, "Comment is required."],
     trim: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 commentSchema.index({ user: 1 });

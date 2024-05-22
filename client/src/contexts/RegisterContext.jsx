@@ -63,7 +63,7 @@ function RegisterProvider({ children }) {
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  const { updateUser } = useAuth();
+  const { updateUser, setIsAuth } = useAuth();
 
   const navigate = useNavigate();
 
@@ -136,6 +136,7 @@ function RegisterProvider({ children }) {
         if (data.user) {
           localStorage.setItem("access_token", data.access_token);
           updateUser(data.user);
+          setIsAuth();
           navigate("/app");
         }
       } catch (error) {

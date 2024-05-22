@@ -19,6 +19,7 @@ function LoginForm() {
       className="showUpAnimation w-1/3 bg-white border-2 p-8 border-black rounded-lg"
       onKeyDown={(event) => {
         if (event.key === "Enter") {
+          event.preventDefault();
           login();
         }
       }}
@@ -50,7 +51,15 @@ function LoginForm() {
         </Link>
       </div>
       <div className="flex flex-col gap-2">
-        <ButtonForm text="Login" handleOnClick={login} />
+        <button
+          className="active:scale-95 transition-all bg-black text-white w-full p-4 rounded-lg border-2 border-white hover:border-black hover:bg-white hover:text-black bg-opacity-80 active:bg-black active:border-white active:text-white"
+          onClick={(event) => {
+            event.preventDefault();
+            login();
+          }}
+        >
+          Login
+        </button>
         <ButtonForm text="Register" handleOnClick={register} />
       </div>
       {error ? (

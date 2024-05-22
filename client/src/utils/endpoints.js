@@ -10,6 +10,12 @@ const API = {
   AVATAR: `${PREFIX_API}/public/images`,
   PHOTO: `${PREFIX_API}/public/images`,
   SUGGEST_USERS: `${PREFIX_API}/api/user/suggestion`,
+  NEW_FEEDS: `${PREFIX_API}/api/post/newfeeds`,
+  FOLLOW_USER: `${PREFIX_API}/api/action/follow`,
+  UNFOLLOW_USER: `${PREFIX_API}/api/action/unfollow`,
+  GET_COMMENT_ON_POST: `${PREFIX_API}/api/comment`,
+  COMMENT_ON_POST: `${PREFIX_API}/api/comment`,
+  GET_POST: `${PREFIX_API}/api/post`,
 };
 
 export { API };

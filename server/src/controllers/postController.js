@@ -25,7 +25,6 @@ exports.getAllPost = catchError(async (req, res, next) => {
   let query = {};
 
   if (req.query.userId) {
-    console.log("ok");
     query.user = req.query.userId;
 
     const user = await User.findById(req.query.userId);
@@ -60,4 +59,16 @@ exports.deletePost = catchError(async (req, res, next) => {
   res.status(204).json({
     message: "Post is successfully deleted.",
   });
+});
+
+exports.getNewFeedPosts = catchError(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+
+  const followings = user.followings;
+
+  const posts = await Post.find({ user: { $in: followings } })
+    .populate("user")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json(posts);
 });

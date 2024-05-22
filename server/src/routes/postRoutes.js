@@ -13,6 +13,8 @@ router
   .post(imageHandler, postController.createPost)
   .get(postController.getAllPost);
 
+router.route("/newfeeds").get(postController.getNewFeedPosts);
+
 router.route("/:postId").delete(postController.deletePost);
 
 module.exports = router;

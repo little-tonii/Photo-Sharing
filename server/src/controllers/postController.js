@@ -72,3 +72,15 @@ exports.getNewFeedPosts = catchError(async (req, res, next) => {
 
   res.status(200).json(posts);
 });
+
+exports.getPost = catchError(async (req, res, next) => {
+  const post = await Post.findById(req.params.postId).populate("user");
+
+  if (!post) {
+    return next(
+      new AppError(`No post found with id ${req.params.postId}.`, 404)
+    );
+  }
+
+  res.status(200).json(post);
+});

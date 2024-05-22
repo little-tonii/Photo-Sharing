@@ -42,7 +42,7 @@ function CreatePost() {
           type="text"
           name="about-photo"
           id="about-photo"
-          placeholder="About this photo..."
+          placeholder="About this photo . . ."
           maxLength={60}
           className="w-full outline-none bg-white"
           value={aboutPhoto}

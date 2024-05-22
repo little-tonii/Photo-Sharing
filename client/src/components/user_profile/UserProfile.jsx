@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { API } from "../../utils/endpoints";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { useViewPost } from "../../contexts/ViewPostContext";
 
 function UserProfile() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const location = useLocation();
+  const { postId, handleViewPost } = useViewPost();
 
   const joinedAt = new Date(user?.createdAt).toLocaleDateString().split("/");
 
@@ -38,7 +40,11 @@ function UserProfile() {
   }, []);
 
   return (
-    <div className="w-5/6 overflow-x-hidden px-36 py-12">
+    <div
+      className={`w-5/6 overflow-x-hidden px-36 py-12 ${
+        postId && "overflow-y-hidden"
+      }`}
+    >
       <div className="flex gap-12 justify-start pb-12 pl-16">
         <div className="w-1/5 bg-white rounded-full ">
           <img
@@ -77,6 +83,7 @@ function UserProfile() {
       <div className="grid grid-cols-3 gap-2 pt-12 mx-8 border-t-2">
         {posts.map((post, index) => (
           <div
+            onClick={() => handleViewPost(post._id)}
             key={index}
             className="bg-black h-72 flex justify-center items-center cursor-pointer relative"
           >

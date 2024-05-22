@@ -4,10 +4,12 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useNewFeeds } from "../../contexts/NewFeedsContext";
 import { API } from "../../utils/endpoints";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useViewPost } from "../../contexts/ViewPostContext";
 
 function NewFeeds() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { postId } = useViewPost();
 
   const { posts, suggestUsers } = useNewFeeds();
 
@@ -19,7 +21,11 @@ function NewFeeds() {
   return (
     <>
       <Outlet />
-      <div className="w-5/6 overflow-x-hidden flex">
+      <div
+        className={`w-5/6 overflow-x-hidden flex ${
+          postId && "overflow-y-hidden"
+        }`}
+      >
         <div className="w-2/3 pr-32 pl-48 first:mt-4">
           {user?.followings.length === 0 ? (
             <div className="text-gray-600 font-bold text-2xl mr-auto ml-auto mt-12 text-center">

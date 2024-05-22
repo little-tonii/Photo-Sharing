@@ -3,12 +3,14 @@ import PostAvatar from "../commons/PostAvatar";
 import { API } from "../../utils/endpoints";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useViewPost } from "../../contexts/ViewPostContext";
 
 function Post({ post }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const [isSending, setIsSending] = useState(false);
   const navigate = useNavigate();
+  const { handleViewPost } = useViewPost();
 
   const date = new Date(post?.createdAt).toLocaleDateString().split("/");
   const showDate = date[1] + "/" + date[0] + "/" + date[2];
@@ -73,7 +75,7 @@ function Post({ post }) {
           >
             {post?.user?.username}
           </h3>
-          <div className="flex">
+          <div className="flex" onClick={() => handleViewPost(post?._id)}>
             <p className="border-b-2 border-white hover:border-gray-400 text-gray-400 cursor-pointer">
               {showDate}
             </p>
@@ -98,13 +100,16 @@ function Post({ post }) {
         <button>
           <span className="ti ti-heart"></span>
         </button>
-        <button>
+        <button onClick={() => handleViewPost(post?._id)}>
           <span className="ti ti-comment"></span>
         </button>
       </div>
       <div>
         {comments.length > 0 && (
-          <button className="text-gray-400 active:text-gray-300">
+          <button
+            onClick={() => handleViewPost(post?._id)}
+            className="text-gray-400 active:text-gray-300"
+          >
             <p>View all {comments.length} comments</p>
           </button>
         )}
@@ -119,15 +124,17 @@ function Post({ post }) {
           placeholder="Comment on this post . . ."
           value={comment}
           onChange={handleCommentChange}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") handleSendComment();
+          }}
         />
 
         {comment && (
           <button
             className="font-bold hover:text-gray-600 px-2"
             onClick={handleSendComment}
-            onKeyDown={(event) => event.key === "Enter" && handleSendComment()}
           >
-            {isSending ? "Sending..." : "Send"}
+            {isSending ? "Sending . . ." : "Send"}
           </button>
         )}
       </div>

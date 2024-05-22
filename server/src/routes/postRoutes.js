@@ -15,6 +15,6 @@ router
 
 router.route("/newfeeds").get(postController.getNewFeedPosts);
 
-router.route("/:postId").delete(postController.deletePost);
+router.route("/:postId").delete(postController.deletePost).get(postController.getPost);
 
 module.exports = router;

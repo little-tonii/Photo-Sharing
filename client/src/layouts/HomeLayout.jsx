@@ -1,12 +1,15 @@
 import NavBar from "../components/navbar/NavBar";
+import ViewPost from "../components/view_post/ViewPost";
 import { useCreatePost } from "../contexts/CreatePostContext";
+import { useViewPost } from "../contexts/ViewPostContext";
 
 function HomeLayout({ children }) {
   const { isCreated, handleClosePopup } = useCreatePost();
+  const { postId } = useViewPost();
   
-
   return (
     <div className="h-screen w-screen relative">
+      {postId && <ViewPost />}
       {isCreated && (
         <div className="w-full h-full absolute bg-black bg-opacity-30 flex justify-center items-center">
           <div className="bg-white rounded-lg py-4 px-8">

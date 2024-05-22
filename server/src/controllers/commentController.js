@@ -10,7 +10,9 @@ exports.getAllCommentsOnPost = catchError(async (req, res, next) => {
     return next(new AppError(`No post found with id ${req.query.post}.`, 404));
   }
 
-  const comments = await Comment.find({ post: req.query.post });
+  const comments = await Comment.find({ post: req.query.post }).populate(
+    "user"
+  );
 
   res.status(200).json(comments);
 });

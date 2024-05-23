@@ -5,13 +5,19 @@ import { useNewFeeds } from "../../contexts/NewFeedsContext";
 import { API } from "../../utils/endpoints";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useViewPost } from "../../contexts/ViewPostContext";
+import { useEffect } from "react";
+import { useLikePost } from "../../contexts/LikePostContext";
 
 function NewFeeds() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { postId } = useViewPost();
-
   const { posts, suggestUsers } = useNewFeeds();
+  const { handleInitState } = useLikePost();
+
+  useEffect(() => {
+    handleInitState(posts);
+  }, [posts]);
 
   function handleNavigateProfile() {
     navigate("/app/profile");

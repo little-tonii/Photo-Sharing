@@ -2,28 +2,20 @@ import { useViewPost } from "../../contexts/ViewPostContext";
 import { API } from "../../utils/endpoints";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useLikePost } from "../../contexts/LikePostContext";
 
 function ViewPost() {
   const { post, comments, handleSetPostId, handleAddNewComment } =
     useViewPost();
-
   const { user } = useAuth();
   const navigate = useNavigate();
   const [enteredComment, setEnteredComment] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [isLiked, setIsLiked] = useState(null);
-
-  useEffect(() => {
-    setIsLiked(post?.likes.includes(user?._id));
-  }, [post]);
-
-  console.log(post);
-  console.log(user);
-  console.log(isLiked);
+  const { isLiked, handleLikePost, handleRemoveLikePost } = useLikePost();
 
   const createdAt = new Date(post?.createdAt).toLocaleDateString().split("/");
 
@@ -56,34 +48,6 @@ function ViewPost() {
       handleAddNewComment(res.data);
       setEnteredComment("");
       setIsSending(false);
-    }
-  }
-
-  async function handleRemoveLikePost() {
-    const res = await axios.delete(API.LIKE_POST + `/${post?._id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
-
-    if (res.status === 200) {
-      setIsLiked(false);
-    }
-  }
-
-  async function handleLikePost() {
-    const res = await axios.post(
-      API.LIKE_POST + `/${post?._id}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }
-    );
-
-    if (res.status === 200) {
-      setIsLiked(true);
     }
   }
 
@@ -188,12 +152,12 @@ function ViewPost() {
               ))}
             </div>
             <div className="flex p-2 gap-2 justify-center items-center border-t-2">
-              {isLiked ? (
-                <button onClick={handleRemoveLikePost}>
+              {isLiked.includes(post?._id) ? (
+                <button onClick={() => handleRemoveLikePost(post._id)}>
                   <FavoriteIcon fontSize="large" />
                 </button>
               ) : (
-                <button onClick={handleLikePost}>
+                <button onClick={() => handleLikePost(post._id)}>
                   <FavoriteBorderIcon fontSize="large" />
                 </button>
               )}

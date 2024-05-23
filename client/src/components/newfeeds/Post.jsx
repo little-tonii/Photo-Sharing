@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useViewPost } from "../../contexts/ViewPostContext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { useAuth } from "../../contexts/AuthContext";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import { useLikePost } from "../../contexts/LikePostContext";
 
 function Post({ post }) {
   const [comments, setComments] = useState([]);
@@ -15,8 +15,7 @@ function Post({ post }) {
   const [isSending, setIsSending] = useState(false);
   const navigate = useNavigate();
   const { handleViewPost } = useViewPost();
-  const { user } = useAuth();
-  const [isLiked, setIsLiked] = useState(post?.likes.includes(user?._id));
+  const { isLiked, handleLikePost, handleRemoveLikePost } = useLikePost();
 
   const date = new Date(post?.createdAt).toLocaleDateString().split("/");
   const showDate = date[1] + "/" + date[0] + "/" + date[2];
@@ -39,34 +38,6 @@ function Post({ post }) {
     }
     getComments();
   }, []);
-
-  async function handleRemoveLikePost() {
-    const res = await axios.delete(API.LIKE_POST + `/${post?._id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
-
-    if (res.status === 200) {
-      setIsLiked(false);
-    }
-  }
-
-  async function handleLikePost() {
-    const res = await axios.post(
-      API.LIKE_POST + `/${post?._id}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }
-    );
-
-    if (res.status === 200) {
-      setIsLiked(true);
-    }
-  }
 
   function handleCommentChange(event) {
     setComment(event.target.value);
@@ -131,12 +102,12 @@ function Post({ post }) {
         </div>
       </div>
       <div className="text-2xl flex gap-4 mt-2">
-        {isLiked ? (
-          <button onClick={handleRemoveLikePost}>
+        {isLiked.includes(post._id) ? (
+          <button onClick={() => handleRemoveLikePost(post?._id)}>
             <FavoriteIcon fontSize="large" />
           </button>
         ) : (
-          <button onClick={handleLikePost}>
+          <button onClick={() => handleLikePost(post?._id)}>
             <FavoriteBorderIcon fontSize="large" />
           </button>
         )}

@@ -16,6 +16,7 @@ const API = {
   GET_COMMENT_ON_POST: `${PREFIX_API}/api/comment`,
   COMMENT_ON_POST: `${PREFIX_API}/api/comment`,
   GET_POST: `${PREFIX_API}/api/post`,
+  LIKE_POST: `${PREFIX_API}/api/action/like`,
 };
 
 export { API };

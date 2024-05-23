@@ -4,6 +4,10 @@ import { API } from "../../utils/endpoints";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useViewPost } from "../../contexts/ViewPostContext";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useAuth } from "../../contexts/AuthContext";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 function Post({ post }) {
   const [comments, setComments] = useState([]);
@@ -11,6 +15,8 @@ function Post({ post }) {
   const [isSending, setIsSending] = useState(false);
   const navigate = useNavigate();
   const { handleViewPost } = useViewPost();
+  const { user } = useAuth();
+  const [isLiked, setIsLiked] = useState(post?.likes.includes(user?._id));
 
   const date = new Date(post?.createdAt).toLocaleDateString().split("/");
   const showDate = date[1] + "/" + date[0] + "/" + date[2];
@@ -33,6 +39,34 @@ function Post({ post }) {
     }
     getComments();
   }, []);
+
+  async function handleRemoveLikePost() {
+    const res = await axios.delete(API.LIKE_POST + `/${post?._id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+
+    if (res.status === 200) {
+      setIsLiked(false);
+    }
+  }
+
+  async function handleLikePost() {
+    const res = await axios.post(
+      API.LIKE_POST + `/${post?._id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
+
+    if (res.status === 200) {
+      setIsLiked(true);
+    }
+  }
 
   function handleCommentChange(event) {
     setComment(event.target.value);
@@ -97,11 +131,17 @@ function Post({ post }) {
         </div>
       </div>
       <div className="text-2xl flex gap-4 mt-2">
-        <button>
-          <span className="ti ti-heart"></span>
-        </button>
+        {isLiked ? (
+          <button onClick={handleRemoveLikePost}>
+            <FavoriteIcon fontSize="large" />
+          </button>
+        ) : (
+          <button onClick={handleLikePost}>
+            <FavoriteBorderIcon fontSize="large" />
+          </button>
+        )}
         <button onClick={() => handleViewPost(post?._id)}>
-          <span className="ti ti-comment"></span>
+          <ChatBubbleOutlineIcon fontSize="large" />
         </button>
       </div>
       <div>
@@ -134,7 +174,7 @@ function Post({ post }) {
             className="font-bold hover:text-gray-600 px-2"
             onClick={handleSendComment}
           >
-            {isSending ? "Sending . . ." : "Send"}
+            {isSending ? "Sending" : "Send"}
           </button>
         )}
       </div>

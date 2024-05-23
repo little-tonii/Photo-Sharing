@@ -16,7 +16,7 @@ exports.likePost = catchError(async (req, res, next) => {
     return next(new AppError("Your already like this post.", 400));
   }
 
-  post.likes.push(req.user._id);
+  post.likes = [...post.likes, req.user._id];
 
   await post.save();
 

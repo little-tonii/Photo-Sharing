@@ -15,7 +15,6 @@ function UserProfile() {
   useEffect(() => {
     async function getData() {
       const userId = location.pathname.split("/")[3];
-
       const resUser = await axios.get(`${API.GET_USER}/${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -26,7 +25,7 @@ function UserProfile() {
 
       setUser(userData);
 
-      const resPosts = await axios.get(`${API.GET_POST}/?${userId}`, {
+      const resPosts = await axios.get(`${API.GET_POST}/?userId=${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
@@ -80,22 +79,30 @@ function UserProfile() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2 pt-12 mx-8 border-t-2">
-        {posts.map((post, index) => (
-          <div
-            onClick={() => handleViewPost(post._id)}
-            key={index}
-            className="bg-black h-72 flex justify-center items-center cursor-pointer relative"
-          >
-            <img
-              className="max-w-full max-h-full"
-              src={`${API.PHOTO}/${posts[index]?.photos[0]}`}
-              alt="post-photo"
-            />
-            <div className="h-full w-full bg-gray-400 opacity-0 hover:opacity-35 absolute"></div>
-          </div>
-        ))}
-      </div>
+      {posts.length > 0 ? (
+        <div className="grid grid-cols-3 gap-2 pt-12 mx-8 border-t-2">
+          {posts.map((post, index) => (
+            <div
+              onClick={() => handleViewPost(post._id)}
+              key={index}
+              className="bg-black h-72 flex justify-center items-center cursor-pointer relative"
+            >
+              <img
+                className="max-w-full max-h-full"
+                src={`${API.PHOTO}/${posts[index]?.photos[0]}`}
+                alt="post-photo"
+              />
+              <div className="h-full w-full bg-gray-400 opacity-0 hover:opacity-35 absolute"></div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center mx-8 border-t-2">
+          <h2 className="font-bold text-4xl text-gray-400 mt-32">
+            Nothing here
+          </h2>
+        </div>
+      )}
     </div>
   );
 }

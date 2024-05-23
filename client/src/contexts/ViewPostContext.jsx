@@ -9,9 +9,6 @@ function ViewPostProvider({ children }) {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
 
-  console.log(post);
-  console.log(comments);
-
   useEffect(() => {
     async function getData() {
       const resPost = await axios.get(`${API.GET_POST}/${postId}`, {
@@ -53,9 +50,20 @@ function ViewPostProvider({ children }) {
     setPostId(postId);
   }
 
+  function handleAddNewComment(comment) {
+    setComments([...comments, comment]);
+  }
+
   return (
     <ViewPostContext.Provider
-      value={{ postId, post, comments, handleSetPostId, handleViewPost }}
+      value={{
+        postId,
+        post,
+        comments,
+        handleSetPostId,
+        handleViewPost,
+        handleAddNewComment,
+      }}
     >
       {children}
     </ViewPostContext.Provider>

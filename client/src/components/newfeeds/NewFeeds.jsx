@@ -15,7 +15,6 @@ function NewFeeds() {
 
   function handleNavigateProfile() {
     navigate("/app/profile");
-    console.log("navigate to profile");
   }
 
   return (

@@ -31,6 +31,7 @@ exports.createCommentOnPost = catchError(async (req, res, next) => {
   }
 
   const comment = await Comment.create(data);
+  comment.user = req.user;
 
   res.status(201).json(comment);
 });

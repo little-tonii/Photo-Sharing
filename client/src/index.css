@@ -24,6 +24,24 @@
     }
 }
 
+@keyframes moveLeftAndBack {
+    0% {
+        transform: translateX(12px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(-12px);
+        opacity: 1;
+    }
+}
+
+.moveLeftAndBackAnimation {
+    animation-name: moveLeftAndBack;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+}
+
 .showUpAnimation {
     animation-name: showUp;
     animation-duration: 0.8s;

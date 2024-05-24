@@ -3,14 +3,20 @@ import { API } from "../../utils/endpoints";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useViewPost } from "../../contexts/ViewPostContext";
+import { useLikePost } from "../../contexts/LikePostContext";
 
 function UserProfile() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const location = useLocation();
   const { postId, handleViewPost } = useViewPost();
+  const { handleInitState } = useLikePost();
 
   const joinedAt = new Date(user?.createdAt).toLocaleDateString().split("/");
+
+  useEffect(() => {
+    handleInitState(posts);
+  }, [posts]);
 
   useEffect(() => {
     async function getData() {
@@ -42,7 +48,7 @@ function UserProfile() {
     <div
       className={`w-5/6 overflow-x-hidden px-36 py-12 ${
         postId && "overflow-y-hidden"
-      }`}
+      } showUpAnimation`}
     >
       <div className="flex gap-12 justify-start pb-12 pl-16">
         <div className="w-1/5 bg-white rounded-full ">
@@ -53,8 +59,9 @@ function UserProfile() {
           />
         </div>
         <div className="flex flex-col gap-4">
-          <div className="font-bold text-2xl">
+          <div className="font-bold text-2xl flex gap-4">
             <h1>{user?.username}</h1>
+            <button></button>
           </div>
           <div className="flex gap-12 text-lg">
             <h3>

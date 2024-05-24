@@ -16,7 +16,7 @@ function CreatePost() {
   } = useCreatePost();
 
   return (
-    <div className="w-5/6 px-96 flex justify-start flex-col items-center overflow-scroll overflow-x-hidden">
+    <div className="w-5/6 px-96 flex justify-start flex-col items-center overflow-scroll overflow-x-hidden showUpAnimation">
       <input
         type="file"
         name="upload-image"

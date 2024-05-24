@@ -8,7 +8,7 @@ function HomeLayout({ children }) {
   const { postId } = useViewPost();
   
   return (
-    <div className="h-screen w-screen relative">
+    <div className="h-screen w-screen relative overflow-hidden">
       {postId && <ViewPost />}
       {isCreated && (
         <div className="w-full h-full absolute bg-black bg-opacity-30 flex justify-center items-center">

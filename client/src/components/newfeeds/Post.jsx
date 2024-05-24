@@ -68,7 +68,7 @@ function Post({ post }) {
   }
 
   return (
-    <div className="pb-6 mt-4 border-b-2">
+    <div className="pb-6 mt-4 border-b-2 showUpAnimation">
       <div className="flex gap-2 mb-2">
         <div onClick={handleNavigateUserProfile}>
           <PostAvatar avatar={post?.user?.avatar} />

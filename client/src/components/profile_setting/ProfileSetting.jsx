@@ -51,7 +51,7 @@ function ProfileSetting() {
   }
 
   return (
-    <div className="w-5/6 overflow-x-hidden px-36 py-12 flex justify-center">
+    <div className="w-5/6 overflow-x-hidden px-36 py-12 flex justify-center showUpAnimation">
       <div className="w-3/5 flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <div>

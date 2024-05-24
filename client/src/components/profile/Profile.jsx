@@ -4,18 +4,24 @@ import { API } from "../../utils/endpoints";
 import axios from "axios";
 import { useViewPost } from "../../contexts/ViewPostContext";
 import { useNavigate } from "react-router-dom";
+import { useLikePost } from "../../contexts/LikePostContext";
 
 function Profile() {
   const { user, updateUser } = useAuth();
   const [posts, setPosts] = useState([]);
   const { handleViewPost, postId } = useViewPost();
   const navigate = useNavigate();
+  const { handleInitState } = useLikePost();
 
   const joinedAt = new Date(user?.createdAt).toLocaleDateString().split("/");
 
   function handleProfileSetting() {
     navigate("/app/profile/setting");
   }
+
+  useEffect(() => {
+    handleInitState(posts);
+  }, [posts]);
 
   useEffect(() => {
     async function getPostsOfUser() {
@@ -39,7 +45,7 @@ function Profile() {
     <div
       className={`w-5/6 overflow-x-hidden px-36 py-12 ${
         postId && "overflow-y-hidden"
-      }`}
+      } showUpAnimation`}
     >
       <div className="flex gap-12 justify-start pb-12 pl-16">
         <div className="w-1/5 bg-white rounded-full ">

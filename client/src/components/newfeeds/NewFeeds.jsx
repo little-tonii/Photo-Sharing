@@ -44,7 +44,7 @@ function NewFeeds() {
             posts.map((post, index) => <Post key={index} post={post} />)
           )}
         </div>
-        <div className="w-1/3 pr-8 mt-8">
+        <div className="w-1/3 pr-8 mt-8 moveLeftAndBackAnimation">
           <div className="flex justify-between items-center pb-4 border-b-2">
             <div className="flex gap-2">
               <div

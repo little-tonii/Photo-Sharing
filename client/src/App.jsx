@@ -10,6 +10,7 @@ import CreatePost from "./components/create_post/CreatePost";
 import Profile from "./components/profile/Profile";
 import UserProfile from "./components/user_profile/UserProfile";
 import ViewPost from "./components/view_post/ViewPost";
+import ProfileSetting from "./components/profile_setting/ProfileSetting";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               }
             >
               <Route index element={<Navigate to="/app/home" />} />
+              <Route path="/app/profile/setting" element={<ProfileSetting />} />
               <Route
                 path="/app/home"
                 element={

@@ -6,6 +6,21 @@ const refreshTokenFactory = require("../utils/refreshTokenFactory");
 const AppError = require("../utils/appError");
 const generateRandomUsername = require("../utils/generateRandomUsername");
 
+exports.updateUser = catchError(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.userId, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!user) {
+    return next(
+      new AppError(`No user found with id ${req.params.userId}.`, 404)
+    );
+  }
+
+  res.status(200).json(user);
+});
+
 exports.getSuggestUsers = catchError(async (req, res, next) => {
   const users = await User.find({
     _id: { $nin: [req.user.id, ...req.user.followings] },

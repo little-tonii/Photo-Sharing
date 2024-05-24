@@ -16,6 +16,6 @@ router.route("/suggestion").get(userController.getSuggestUsers);
 
 router.route("/logout").delete(userController.logout);
 
-router.route("/:userId").get(userController.getUser);
+router.route("/:userId").get(userController.getUser).patch(userController.updateUser);
 
 module.exports = router;

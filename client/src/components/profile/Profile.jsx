@@ -3,13 +3,19 @@ import { useAuth } from "../../contexts/AuthContext";
 import { API } from "../../utils/endpoints";
 import axios from "axios";
 import { useViewPost } from "../../contexts/ViewPostContext";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const { user, updateUser } = useAuth();
   const [posts, setPosts] = useState([]);
   const { handleViewPost, postId } = useViewPost();
+  const navigate = useNavigate();
 
   const joinedAt = new Date(user?.createdAt).toLocaleDateString().split("/");
+
+  function handleProfileSetting() {
+    navigate("/app/profile/setting");
+  }
 
   useEffect(() => {
     async function getPostsOfUser() {
@@ -49,7 +55,10 @@ function Profile() {
               <h1>{user?.username}</h1>
             </div>
             <div>
-              <button className="active:scale-95 transition-all bg-black text-white px-2 py-1 rounded-lg border-2 border-white hover:border-black hover:bg-white hover:text-black bg-opacity-80 active:bg-black active:border-white active:text-white ">
+              <button
+                onClick={handleProfileSetting}
+                className="active:scale-95 transition-all bg-black text-white px-2 py-1 rounded-lg border-2 border-white hover:border-black hover:bg-white hover:text-black bg-opacity-80 active:bg-black active:border-white active:text-white "
+              >
                 <span className="ti ti-settings text-lg flex justify-center items-center"></span>
               </button>
             </div>

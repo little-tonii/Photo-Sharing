@@ -4,6 +4,7 @@ const API = {
   LOGIN: `${PREFIX_API}/api/user/login`,
   REGISTER: `${PREFIX_API}/api/user/register`,
   LOGOUT: `${PREFIX_API}/api/user/logout`,
+  UPDATE_PROFILE: `${PREFIX_API}/api/user`,
   GET_USER: `${PREFIX_API}/api/user`,
   CREATE_POST: `${PREFIX_API}/api/post`,
   GET_ACCESS_TOKEN: `${PREFIX_API}/api/user/refresh`,

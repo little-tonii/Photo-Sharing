@@ -43,12 +43,12 @@ function LoginForm() {
         />
       </div>
       <div className="mb-8">
-        <Link
+        {/* <Link
           className="text-sm text-gray-400 hover:text-gray-600 active:text-gray-600 text-right"
           to="/forgot-password"
         >
           <p>Forgot password?</p>
-        </Link>
+        </Link> */}
       </div>
       <div className="flex flex-col gap-2">
         <button
